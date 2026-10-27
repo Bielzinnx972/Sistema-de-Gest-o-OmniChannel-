@@ -1,0 +1,63 @@
+erDiagram
+  CLIENTES ||--o{ PEDIDOS : realiza
+  LOJAS ||--o{ PEDIDOS : recebe
+  PEDIDOS ||--|{ ITEM_PEDIDO : contem
+  PRODUTOS ||--o{ ITEM_PEDIDO : aparece_em
+  PEDIDOS ||--o{ PAGAMENTOS : possui
+  LOJAS ||--o{ ESTOQUE : mantem
+  PRODUTOS ||--o{ ESTOQUE : armazenado_em
+  PRODUTOS ||--o{ AUDITORIA_PRECO : auditado
+  CLIENTES {
+    int id_cliente PK
+    varchar nome
+    varchar email UK
+    varchar telefone
+    datetime data_cadastro
+  }
+  LOJAS {
+    int id_loja PK
+    varchar nome
+    varchar cidade
+    char estado
+  }
+  PRODUTOS {
+    int id_produto PK
+    varchar nome
+    decimal preco
+    boolean ativo
+  }
+  PEDIDOS {
+    int id_pedido PK
+    int id_cliente FK
+    int id_loja FK
+    datetime data_pedido
+    enum status
+  }
+  ITEM_PEDIDO {
+    int id_item PK
+    int id_pedido FK
+    int id_produto FK
+    int quantidade
+    decimal preco_unitario
+  }
+  PAGAMENTOS {
+    int id_pagamento PK
+    int id_pedido FK
+    enum forma_pagamento
+    decimal valor
+    enum status
+  }
+  ESTOQUE {
+    int id_estoque PK
+    int id_loja FK
+    int id_produto FK
+    int quantidade
+  }
+  AUDITORIA_PRECO {
+    int id_auditoria PK
+    int id_produto FK
+    decimal preco_anterior
+    decimal preco_novo
+    datetime alterado_em
+    varchar usuario_bd
+  }
